@@ -1,38 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Alliance Check</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    body { font-family: sans-serif; padding: 20px; max-width: 600px; margin: auto; }
-    label, select, input, textarea, button { display: block; margin: 10px 0; width: 100%; }
+    :root {
+      --primary: #00c7a5;
+      --accent: #36c;
+      --bg: #f2f4f7;
+      --text: #333;
+      --card: #fff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .card {
+      background: var(--card);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      max-width: 500px;
+      width: 100%;
+    }
+
+    h1 {
+      margin-top: 0;
+      text-align: center;
+      font-size: 1.8rem;
+      color: var(--accent);
+    }
+
+    label {
+      font-weight: 600;
+      margin-top: 15px;
+      display: block;
+      color: var(--text);
+    }
+
+    select, input, textarea {
+      width: 100%;
+      padding: 10px 12px;
+      margin-top: 5px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+      transition: border-color 0.2s ease;
+    }
+
+    select:focus, input:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    button {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 12px;
+      margin-top: 20px;
+      width: 100%;
+      font-weight: 600;
+      font-size: 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #009e82;
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        padding: 20px;
+        margin: 10px;
+      }
+    }
   </style>
 </head>
 <body>
-  <h1>Alliance Check Submission</h1>
-  <form id="allianceForm">
-    <label for="group">Select Your Group:</label>
-    <select id="group" required>
-      <option value="">-- Select Group --</option>
-      <option value="GroupA">Group A</option>
-      <option value="GroupB">Group B</option>
-      <!-- Add more groups here -->
-    </select>
+  <div class="card">
+    <h1>Alliance Check</h1>
+    <form id="allianceForm">
+      <label for="group">Select Your Group:</label>
+      <select id="group" required>
+        <option value="">-- Select Group --</option>
+        <option value="GroupA">Group A</option>
+        <option value="GroupB">Group B</option>
+        <!-- Add more here -->
+      </select>
 
-    <label for="rep">Representative Username:</label>
-    <input type="text" id="rep" required>
+      <label for="rep">Representative Username:</label>
+      <input type="text" id="rep" required>
 
-    <label for="check">Alliance Check Response:</label>
-    <textarea id="check" required></textarea>
+      <label for="check">Alliance Check Response:</label>
+      <textarea id="check" rows="4" required></textarea>
 
-    <button type="submit">Submit</button>
-  </form>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
 
   <script>
     const webhooks = {
-      "GroupA": "https://discord.com/api/webhooks/123/abc123...",  // Group A's webhook
-      "GroupB": "https://discord.com/api/webhooks/456/def456...",  // Group B's webhook
-      // Add more group-webhook pairs here
+      "GroupA": "https://discord.com/api/webhooks/...",
+      "GroupB": "https://discord.com/api/webhooks/..."
     };
 
     const form = document.getElementById("allianceForm");
@@ -46,7 +131,7 @@
       const webhookURL = webhooks[group];
 
       if (!webhookURL) {
-        alert("❌ No webhook found for that group.");
+        alert("❌ Webhook not found for that group.");
         return;
       }
 
@@ -62,13 +147,13 @@
         });
 
         if (res.ok) {
-          alert("✅ Submission sent to your group's channel!");
+          alert("✅ Submission sent!");
           form.reset();
         } else {
-          alert("❌ Failed to send. Check webhook URL.");
+          alert("❌ Failed to send. Check webhook.");
         }
       } catch (err) {
-        alert("❌ Something went wrong while sending.");
+        alert("❌ Error sending to Discord.");
         console.error(err);
       }
     });
