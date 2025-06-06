@@ -204,11 +204,11 @@
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      const group = document.getElementById("group").value;
-      const rep = document.getElementById("rep").value;
-      const check = document.getElementById("check").value;
-      const activity = document.getElementById("activity").value;
-      const events = document.getElementById("events").value;
+    const q1 = document.getElementById("1").value;
+    const q2 = document.getElementById("2").value;
+    const q3 = document.getElementById("3").value;
+    const q4 = document.getElementById("4").value;
+    const q5 = document.getElementById("5").value;
       const webhookURL = webhooks[group];
 
       if (!webhookURL) {
@@ -228,7 +228,7 @@
               { name: "Alliance Feedback", value: q1 || "(No response)", inline: false },
               { name: "Concerns or Issues", value: q2 || "(No response)", inline: false },
               { name: "Hosted Events", value: q3 || "(No response)", inline: false },
-              { name: "Willing to Host Events?", value: q4 || "(No response)", inline: false },
+              { name: "Willing to Host Events?", value: q4 || "(No response)", inline: false }, 
               { name: "Questions for Us", value: q5 || "(No response)", inline: false }
             ],
             timestamp: new Date().toISOString()
@@ -247,7 +247,7 @@
           alert("Submission sent! Thank you for your feedback!");
           form.reset();
         } else {
-          alert("❌ Error 101 Please open a tickt under the User Reports/Other Catogry and ask for Enzo."
+          alert("❌ Error 101 Please open a tickt under the User Reports/Other Catogry and ask for Enzo.");
         }
       } catch (err) {
         alert("❌ Error 102 Please open a tickt under the User Reports/Other Catogry and ask for Enzo.");
