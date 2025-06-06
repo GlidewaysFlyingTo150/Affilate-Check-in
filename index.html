@@ -209,7 +209,9 @@
     const q3 = document.getElementById("3").value;
     const q4 = document.getElementById("4").value;
     const q5 = document.getElementById("5").value;
-      const webhookURL = webhooks[group];
+    const group = document.getElementById("group").value;
+    const rep = document.getElementById("rep").value;
+    const webhookURL = webhooks[group];
 
       if (!webhookURL) {
         alert("❌ Webhook not found for that group.");
