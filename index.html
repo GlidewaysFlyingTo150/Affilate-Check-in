@@ -8,7 +8,7 @@
     :root {
       --primary: #00c7a5;
       --accent: #3366cc;
-      --bg: #f2f4f7;
+      --bg: #e6fff9;
       --text: #333;
       --card: rgba(255, 255, 255, 0.9);
     }
@@ -20,10 +20,12 @@
     body {
       margin: 0;
       font-family: "Trebuchet MS", sans-serif;
-      background: url("Booking.webp") no-repeat center center fixed;
+      background: var(--bg);
+      background-image: url("Booking.webp");
       background-size: cover;
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
+      background-position: center;
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -34,9 +36,10 @@
       background: var(--card);
       padding: 30px;
       border-radius: 20px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
       max-width: 500px;
       width: 100%;
+      position: relative;
     }
 
     h1 {
@@ -81,10 +84,38 @@
       border-radius: 10px;
       cursor: pointer;
       transition: transform 0.2s ease;
+      position: relative;
     }
 
     button:hover {
       transform: scale(1.02);
+    }
+
+    .spinner {
+      display: none;
+      width: 22px;
+      height: 22px;
+      border: 3px solid #fff;
+      border-top: 3px solid transparent;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .loading .spinner {
+      display: inline-block;
+    }
+
+    .loading {
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
     }
 
     @media (max-width: 600px) {
@@ -104,7 +135,6 @@
         <option value="">-- Select Group --</option>
         <option value="GroupA">Group A</option>
         <option value="GroupB">Group B</option>
-        <!-- Add more here -->
       </select>
 
       <label for="rep">Representative Username:</label>
@@ -113,7 +143,10 @@
       <label for="check">Alliance Check Response:</label>
       <textarea id="check" rows="4" required></textarea>
 
-      <button type="submit">Submit</button>
+      <button type="submit">
+        Submit
+        <span class="spinner"></span>
+      </button>
     </form>
   </div>
 
@@ -124,13 +157,15 @@
     };
 
     const form = document.getElementById("allianceForm");
+    const button = form.querySelector("button");
+    const spinner = button.querySelector(".spinner");
+
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
       const group = document.getElementById("group").value;
       const rep = document.getElementById("rep").value;
       const check = document.getElementById("check").value;
-
       const webhookURL = webhooks[group];
 
       if (!webhookURL) {
@@ -138,6 +173,7 @@
         return;
       }
 
+      button.classList.add("loading");
       const payload = {
         content: `📋 **Alliance Check Submission**\n\n**Group:** ${group}\n**Representative:** ${rep}\n**Response:**\n${check}`
       };
@@ -158,6 +194,8 @@
       } catch (err) {
         alert("❌ Error sending to Discord.");
         console.error(err);
+      } finally {
+        button.classList.remove("loading");
       }
     });
   </script>
