@@ -9,7 +9,7 @@
       --primary: #00c7a5;
       --accent: #3366cc;
       --bg: #e6fff9;
-      --text: #333;
+      --text: #3366cc;
       --card: rgba(255, 255, 255, 0.9);
     }
 
@@ -46,8 +46,15 @@
       margin-top: 0;
       text-align: center;
       font-size: 2rem;
-      color: var(--accent);
+      color: var(--primary);
     }
+
+    .warning {
+  text-align: center;
+  color: var(--text);
+  font-weight: bold;
+  margin-bottom: 20px;
+}
 
     label {
       font-weight: bold;
@@ -128,7 +135,7 @@
 </head>
 <body>
   <div class="card">
-    <h1>Alliance Check</h1>
+    <p class="warning">Any use of AI will result in a strike.</p>
     <p>Any use of AI will result in a stike.</p>
     <form id="allianceForm">
       <label for="group">Select Your Group:</label>
